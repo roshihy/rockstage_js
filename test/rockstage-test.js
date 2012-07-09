@@ -26,5 +26,21 @@ buster.testCase('RockstageTest', {
     RS.clear();
 
     refute.isNull(localStorage);
-  }
+  },
+  'storage isn\'t available browser': function(){
+	  if(this.sessionStorage !== undefined){
+		  this.sessionStorage = undefined;
+	  };
+	  if(this.localStorage !== undefined){
+		  this.localStorage = undefined;
+	  };
+	  assert(new Error('storage isn\'t available this browser'));
+  },
+  'length() should be equal storage.length': function() {
+	    RS.put({foo: 'hoge', bar: 'fuga', baz: 'hogera'});
+	    RS.put({foo: 'hoge', bar: 'fuga', baz: 'hogera', piyo: true}, false);
+
+	    assert.equals(3, localStorage.length);
+	    assert.equals(4, sessionStorage.length);
+  },
 });
